@@ -44,7 +44,7 @@ func Quicksort(nums []int) []int {
 
 	nums[pivot], nums[right] = nums[right], nums[pivot]
 
-	for i, _ := range nums {
+	for i := range nums {
 		if nums[i] < nums[right] {
 			nums[left], nums[i] = nums[i], nums[left]
 			left++
