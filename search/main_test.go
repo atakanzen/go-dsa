@@ -1,6 +1,7 @@
-package search
+package search_test
 
 import (
+	"algorithms/search"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,7 +19,7 @@ func TestBinarySearchFound(t *testing.T) {
 	list := makeList(0, 500000)
 	item := 221017
 
-	position, err := BinarySearch(item, list)
+	position, err := search.BinarySearch(item, list)
 
 	assert.Equal(t, item, position)
 	assert.ErrorIs(t, err, nil)
@@ -28,7 +29,7 @@ func TestBinarySearchNotFound(t *testing.T) {
 	list := makeList(0, 1)
 	item := 311098
 
-	position, err := BinarySearch(item, list)
+	position, err := search.BinarySearch(item, list)
 
 	assert.NotEqualValues(t, item, position)
 	assert.Error(t, err)
