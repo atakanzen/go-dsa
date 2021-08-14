@@ -1,6 +1,7 @@
 package main
 
 import (
+	"algorithms/graph"
 	"algorithms/recursion"
 	"algorithms/search"
 	"fmt"
@@ -36,4 +37,20 @@ func main() {
 		fmt.Printf("Binary Search Result: %v\n", binarySearchResult)
 	}
 
+	// Directed Graph
+	g := graph.NewGraph(true)
+	g.AddVertices([]int{3, 4, 5, 2, 1, 6, 7})
+
+	g.AddEdges(map[int]int{
+		4: 5,
+		3: 6,
+		2: 7,
+		5: 2,
+		1: 5,
+		6: 7,
+		7: 3,
+	})
+
+	// Breadth-First Search
+	graph.BFS(g, g.Vertices[3])
 }
