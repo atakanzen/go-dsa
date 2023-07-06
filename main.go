@@ -4,6 +4,7 @@ import (
 	"algorithms/graph"
 	"algorithms/recursion"
 	"algorithms/search"
+	"algorithms/stack"
 	"fmt"
 )
 
@@ -53,4 +54,24 @@ func main() {
 
 	// Breadth-First Search
 	graph.BFS(g, g.Vertices[3])
+
+	myStack := stack.NewStack()
+
+	myStack.Push(10)
+	myStack.Push(15)
+	myStack.Push(52)
+	lastItem := myStack.Peek()
+
+	if lastItem == 52 {
+		fmt.Printf("Hooray, it's working! The last item in stack is %d\n", lastItem)
+	}
+
+	myStack.Pop()
+	myStack.Pop()
+
+	lastItem = myStack.Peek()
+	if lastItem == 10 {
+		fmt.Printf("It's working again with %d\n", lastItem)
+	}
+
 }
