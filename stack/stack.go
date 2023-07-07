@@ -6,12 +6,10 @@ type Stack struct {
 }
 
 func NewStack() *Stack {
-	stack := Stack{
+	return &Stack{
 		values:  make([]int, 1),
 		pointer: 0,
 	}
-
-	return &stack
 }
 
 func (s *Stack) Push(pushedValue int) {
