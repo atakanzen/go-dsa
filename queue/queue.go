@@ -15,6 +15,10 @@ func NewQueue() *Queue {
 }
 
 func (q *Queue) Peek() interface{} {
+	if len(q.values) == 0 {
+		return nil
+	}
+
 	return q.values[q.start]
 }
 
@@ -23,9 +27,14 @@ func (q *Queue) Push(item interface{}) {
 	q.end++
 }
 
-func (q *Queue) Pop() {
-	q.values = q.values[q.start:]
-	q.start--
+func (q *Queue) Pop() bool {
+	if len(q.values) != 0 {
+		q.values = q.values[q.start:]
+		q.start++
+		return true
+	}
+
+	return false
 }
 
 func (q *Queue) Values() []interface{} {
