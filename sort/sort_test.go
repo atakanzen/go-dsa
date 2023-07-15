@@ -2,10 +2,22 @@ package sort_test
 
 import (
 	"algorithms/sort"
+	"math/rand"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
+
+// Used for Benchmarks
+func generateRandomSlice(size int) []int {
+	rand.Seed(time.Now().UnixNano())
+	slice := make([]int, size)
+	for i := 0; i < size; i++ {
+		slice[i] = rand.Intn(1000) // Modify the range as needed
+	}
+	return slice
+}
 
 func TestInsertionSort(t *testing.T) {
 	testCases := []struct {
@@ -220,6 +232,34 @@ func TestQuickSortingMultipleItemArray(t *testing.T) {
 	expectedResult := []int{-3, 2, 4, 9, 100}
 
 	assert.Equal(t, expectedResult, quicksortResult)
+}
+
+func BenchmarkQuicksort(b *testing.B) {
+	testCases := []struct {
+		desc  string
+		input []int
+	}{
+		{
+			desc:  "sort 150 items",
+			input: generateRandomSlice(150),
+		},
+		{
+			desc:  "sort 1500 items",
+			input: generateRandomSlice(1500),
+		},
+		{
+			desc:  "sort 15000 items",
+			input: generateRandomSlice(15000),
+		},
+	}
+
+	for _, tC := range testCases {
+		b.Run(tC.desc, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				sort.Quicksort(tC.input)
+			}
+		})
+	}
 }
 
 func TestMergesort(t *testing.T) {

@@ -100,9 +100,11 @@ func Quicksort(nums []int) []int {
 		return nums
 	}
 
-	left := 0
+	left, right := 0, len(nums)-1
 
 	pivot := rand.Intn(len(nums))
+	nums[pivot], nums[right] = nums[right], nums[pivot]
+	pivot = right
 
 	for i := 0; i < pivot; i++ {
 		if nums[i] < nums[pivot] {
