@@ -69,6 +69,12 @@ func Mergesort(nums []int) []int {
 	rightList := Mergesort(nums[mid:])
 	sortedList := make([]int, 0)
 
+	sortedList = mergeLists(leftList, rightList, sortedList)
+
+	return sortedList
+}
+
+func mergeLists(leftList []int, rightList []int, sortedList []int) []int {
 	for leftPointer, rightPointer := 0, 0; leftPointer < len(leftList) || rightPointer < len(rightList); {
 		if leftPointer == len(leftList) {
 			sortedList = append(sortedList, rightList[rightPointer])
@@ -84,7 +90,6 @@ func Mergesort(nums []int) []int {
 			rightPointer++
 		}
 	}
-
 	return sortedList
 }
 
