@@ -1,6 +1,8 @@
 package sort
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 // O(N^2)
 func InsertionSort(list []int) []int {
@@ -94,24 +96,22 @@ func mergeLists(leftList []int, rightList []int, sortedList []int) []int {
 }
 
 func Quicksort(nums []int) []int {
-	if len(nums) < 2 {
+	if len(nums) <= 1 {
 		return nums
 	}
 
-	left, right := 0, len(nums)-1
+	left := 0
 
 	pivot := rand.Intn(len(nums))
 
-	nums[pivot], nums[right] = nums[right], nums[pivot]
-
-	for i := range nums {
-		if nums[i] < nums[right] {
+	for i := 0; i < pivot; i++ {
+		if nums[i] < nums[pivot] {
 			nums[left], nums[i] = nums[i], nums[left]
 			left++
 		}
 	}
 
-	nums[left], nums[right] = nums[right], nums[left]
+	nums[left], nums[pivot] = nums[pivot], nums[left]
 
 	Quicksort(nums[:left])
 	Quicksort(nums[left+1:])
