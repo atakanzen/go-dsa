@@ -204,3 +204,49 @@ func BenchmarkBubbleSort(b *testing.B) {
 		})
 	}
 }
+
+func TestQuickSortSingleItemArray(t *testing.T) {
+	singleItemArray := []int{10}
+
+	quicksortResult := sort.Quicksort(singleItemArray)
+
+	assert.Equal(t, singleItemArray, quicksortResult)
+}
+
+func TestQuickSortingMultipleItemArray(t *testing.T) {
+	multipleItemArray := []int{9, -3, 2, 100, 4}
+
+	quicksortResult := sort.Quicksort(multipleItemArray)
+	expectedResult := []int{-3, 2, 4, 9, 100}
+
+	assert.Equal(t, expectedResult, quicksortResult)
+}
+
+func TestMergesort(t *testing.T) {
+	testCases := []struct {
+		desc        string
+		input, want []int
+	}{
+		{
+			desc:  "sort single item array",
+			input: []int{5},
+			want:  []int{5},
+		},
+		{
+			desc:  "sort 3 item array",
+			input: []int{45, 34, 5},
+			want:  []int{5, 34, 45},
+		},
+		{
+			desc:  "sort 10 item array",
+			input: []int{5, 34, 45, 11, 2, 14, 56, 87, 10, 3},
+			want:  []int{2, 3, 5, 10, 11, 14, 34, 45, 56, 87},
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			actual := sort.Mergesort(tC.input)
+			assert.Equal(t, tC.want, actual)
+		})
+	}
+}

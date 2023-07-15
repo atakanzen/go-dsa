@@ -1,5 +1,7 @@
 package sort
 
+import "math/rand"
+
 // O(N^2)
 func InsertionSort(list []int) []int {
 	for i := 0; i < len(list); i++ {
@@ -54,4 +56,60 @@ func BubbleSort(list []int) []int {
 	}
 
 	return list
+}
+
+func Mergesort(nums []int) []int {
+	if len(nums) <= 1 {
+		return nums
+	}
+
+	mid := len(nums) / 2
+
+	leftList := Mergesort(nums[:mid])
+	rightList := Mergesort(nums[mid:])
+	sortedList := make([]int, 0)
+
+	for leftPointer, rightPointer := 0, 0; leftPointer < len(leftList) || rightPointer < len(rightList); {
+		if leftPointer == len(leftList) {
+			sortedList = append(sortedList, rightList[rightPointer])
+			rightPointer++
+		} else if rightPointer == len(rightList) {
+			sortedList = append(sortedList, leftList[leftPointer])
+			leftPointer++
+		} else if leftList[leftPointer] <= rightList[rightPointer] {
+			sortedList = append(sortedList, leftList[leftPointer])
+			leftPointer++
+		} else {
+			sortedList = append(sortedList, rightList[rightPointer])
+			rightPointer++
+		}
+	}
+
+	return sortedList
+}
+
+func Quicksort(nums []int) []int {
+	if len(nums) < 2 {
+		return nums
+	}
+
+	left, right := 0, len(nums)-1
+
+	pivot := rand.Intn(len(nums))
+
+	nums[pivot], nums[right] = nums[right], nums[pivot]
+
+	for i := range nums {
+		if nums[i] < nums[right] {
+			nums[left], nums[i] = nums[i], nums[left]
+			left++
+		}
+	}
+
+	nums[left], nums[right] = nums[right], nums[left]
+
+	Quicksort(nums[:left])
+	Quicksort(nums[left+1:])
+
+	return nums
 }

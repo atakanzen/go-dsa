@@ -61,20 +61,3 @@ func TestRecursionMaxMultipleItemArray(t *testing.T) {
 
 	assert.Equal(t, 99, maxResult)
 }
-
-func TestQuickSortSingleItemArray(t *testing.T) {
-	singleItemArray := []int{10}
-
-	quicksortResult := Quicksort(singleItemArray)
-
-	assert.Equal(t, singleItemArray, quicksortResult)
-}
-
-func TestQuickSortingMultipleItemArray(t *testing.T) {
-	multipleItemArray := []int{9, -3, 2, 100, 4}
-
-	quicksortResult := Quicksort(multipleItemArray)
-	expectedResult := []int{-3, 2, 4, 9, 100}
-
-	assert.Equal(t, expectedResult, quicksortResult)
-}
