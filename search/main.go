@@ -1,24 +1,22 @@
 package search
 
-import (
-	"errors"
-)
+func BinarySearch(arr []int, target int) int {
+	left := 0
+	right := len(arr) - 1
 
-func BinarySearch(item int, list []int) (int, error) {
-	low := 0
-	high := len(list) - 1
-	for i := 0; i <= high; i++ {
-		mid := (low + high) / 2
-		guess := list[mid]
+	for left <= right {
+		mid := left + (right-left)/2 // (right-left) / 2 deals with potential overflow problems
 
-		if guess == item {
-			return mid, nil
-		} else if guess > item {
-			high = mid - 1
+		if arr[mid] == target {
+			return mid
+		}
+
+		if arr[mid] < target {
+			left = mid + 1
 		} else {
-			low = mid + 1
+			right = mid - 1
 		}
 	}
 
-	return 0, errors.New("item does not exist")
+	return -1 // Not found
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func makeList(min, max int) []int {
-	a := make([]int, max-min+1)
+	a := make([]int, max)
 	for i := range a {
 		a[i] = min + i
 	}
@@ -16,21 +16,20 @@ func makeList(min, max int) []int {
 }
 
 func TestBinarySearchFound(t *testing.T) {
-	list := makeList(0, 500000)
+	list := makeList(1, 500000)
 	item := 221017
 
-	position, err := search.BinarySearch(item, list)
+	position := search.BinarySearch(list, item)
+	want := 221016
 
-	assert.Equal(t, item, position)
-	assert.ErrorIs(t, err, nil)
+	assert.Equal(t, want, position)
 }
 
 func TestBinarySearchNotFound(t *testing.T) {
 	list := makeList(0, 1)
 	item := 311098
 
-	position, err := search.BinarySearch(item, list)
+	position := search.BinarySearch(list, item)
 
-	assert.NotEqualValues(t, item, position)
-	assert.Error(t, err)
+	assert.Equal(t, -1, position)
 }
