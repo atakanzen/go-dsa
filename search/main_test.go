@@ -1,9 +1,9 @@
 package search_test
 
 import (
-	"algorithms/search"
 	"testing"
 
+	"github.com/atakanzen/go-dsa/search"
 	"github.com/stretchr/testify/assert"
 )
 

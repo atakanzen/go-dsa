@@ -1,9 +1,9 @@
 package stack_test
 
 import (
-	"algorithms/stack"
 	"testing"
 
+	"github.com/atakanzen/go-dsa/stack"
 	"github.com/stretchr/testify/assert"
 )
 

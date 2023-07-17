@@ -1,9 +1,9 @@
 package linkedlist_test
 
 import (
-	"algorithms/linkedlist"
 	"testing"
 
+	"github.com/atakanzen/go-dsa/linkedlist"
 	"github.com/stretchr/testify/assert"
 )
 

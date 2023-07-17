@@ -1,9 +1,9 @@
 package queue_test
 
 import (
-	"algorithms/queue"
 	"testing"
 
+	"github.com/atakanzen/go-dsa/queue"
 	"github.com/stretchr/testify/assert"
 )
 

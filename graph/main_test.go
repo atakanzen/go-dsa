@@ -1,9 +1,9 @@
 package graph_test
 
 import (
-	"algorithms/graph"
 	"testing"
 
+	"github.com/atakanzen/go-dsa/graph"
 	"github.com/stretchr/testify/assert"
 )
 

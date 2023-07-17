@@ -1,11 +1,11 @@
 package sort_test
 
 import (
-	"algorithms/sort"
 	"math/rand"
 	"testing"
 	"time"
 
+	"github.com/atakanzen/go-dsa/sort"
 	"github.com/stretchr/testify/assert"
 )
 
