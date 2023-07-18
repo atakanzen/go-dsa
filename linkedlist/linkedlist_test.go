@@ -86,6 +86,55 @@ func TestDoublyLinkedListRemove(t *testing.T) {
 	}
 }
 
+func TestDoublyLinkedListRemoveAt(t *testing.T) {
+	testCases := []struct {
+		desc         string
+		initalValues []interface{}
+		removeIndex  int
+		valuesAfter  []interface{}
+		want         bool
+	}{
+		{
+			desc:         "should remove first item",
+			initalValues: []interface{}{24, 12, 6, 34},
+			removeIndex:  0,
+			valuesAfter:  []interface{}{12, 6, 34},
+			want:         true,
+		},
+		{
+			desc:         "should remove last item",
+			initalValues: []interface{}{24, 12, 6, 34},
+			removeIndex:  3,
+			valuesAfter:  []interface{}{24, 12, 6},
+			want:         true,
+		},
+		{
+			desc:         "should remove item at index 1",
+			initalValues: []interface{}{24, 12, 6, 34},
+			removeIndex:  1,
+			valuesAfter:  []interface{}{24, 6, 34},
+			want:         true,
+		},
+		{
+			desc:         "should return false with empty linked list",
+			initalValues: []interface{}{},
+			removeIndex:  0,
+			valuesAfter:  nil,
+			want:         false,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			doubleLinkedList := linkedlist.NewDoublyLinkedList(tC.initalValues...)
+			actual := doubleLinkedList.RemoveAt(tC.removeIndex)
+			actualValues := doubleLinkedList.Values()
+
+			assert.Equal(t, tC.want, actual)
+			assert.Equal(t, tC.valuesAfter, actualValues)
+		})
+	}
+}
+
 func BenchmarkDoublyLinkedListGet(b *testing.B) {
 	newDoublyLinkedList := linkedlist.NewDoublyLinkedList(45, 15, 26, 12, 56, 34, 11, 65)
 	for i := 0; i < b.N; i++ {

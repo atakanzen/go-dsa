@@ -1,10 +1,9 @@
 package linkedlist
 
-import "fmt"
-
 type DoublyLinkedList struct {
-	Head *Node
-	Tail *Node
+	Head   *Node
+	Tail   *Node
+	Length int
 }
 
 type Node struct {
@@ -22,47 +21,50 @@ func NewDoublyLinkedList(values ...interface{}) *DoublyLinkedList {
 	return newList
 }
 
-func (sl *DoublyLinkedList) Add(value interface{}) {
+func (dl *DoublyLinkedList) Add(value interface{}) {
 	newNode := &Node{Value: value}
 
-	if sl.Head == nil {
-		sl.Head = newNode
-		sl.Tail = newNode
+	if dl.Head == nil {
+		dl.Head = newNode
+		dl.Tail = newNode
 	} else {
-		newNode.Prev = sl.Tail
-		sl.Tail.Next = newNode
-		sl.Tail = newNode
+		newNode.Prev = dl.Tail
+		dl.Tail.Next = newNode
+		dl.Tail = newNode
 	}
 
+	dl.Length += 1
 }
 
-func (sl *DoublyLinkedList) Prepend(value interface{}) {
+func (dl *DoublyLinkedList) Prepend(value interface{}) {
 	newNode := &Node{Value: value}
 
-	if sl.Head == nil {
-		sl.Head = newNode
-		sl.Tail = newNode
+	if dl.Head == nil {
+		dl.Head = newNode
+		dl.Tail = newNode
 	} else {
-		newNode.Next = sl.Head
-		sl.Head.Prev = newNode
-		sl.Head = newNode
+		newNode.Next = dl.Head
+		dl.Head.Prev = newNode
+		dl.Head = newNode
 	}
+
+	dl.Length += 1
 }
 
-func (sl *DoublyLinkedList) Get(value interface{}) *Node {
-	if sl.Head == nil {
+func (dl *DoublyLinkedList) Get(value interface{}) *Node {
+	if dl.Head == nil {
 		return nil
 	}
 
-	if sl.Head.Value == value {
-		return sl.Head
+	if dl.Head.Value == value {
+		return dl.Head
 	}
 
-	if sl.Tail != nil && sl.Tail.Value == value {
-		return sl.Tail
+	if dl.Tail != nil && dl.Tail.Value == value {
+		return dl.Tail
 	}
 
-	n := sl.Head
+	n := dl.Head
 
 	for n != nil {
 		if value == n.Value {
@@ -74,26 +76,31 @@ func (sl *DoublyLinkedList) Get(value interface{}) *Node {
 	return nil
 }
 
-func (sl *DoublyLinkedList) Remove(value interface{}) bool {
-	if sl.Head == nil {
+func (dl *DoublyLinkedList) Remove(value interface{}) bool {
+	if dl.Head == nil {
 		return false
 	}
 
-	if value == sl.Head.Value {
-		sl.Head.Next.Prev = nil
-		sl.Head = sl.Head.Next
+	if value == dl.Head.Value {
+		dl.Head.Next.Prev = nil
+		dl.Head = dl.Head.Next
+		dl.Length -= 1
+		return true
 	}
 
-	if value == sl.Tail.Value {
-		sl.Tail.Prev.Next = nil
-		sl.Tail = sl.Tail.Prev
+	if value == dl.Tail.Value {
+		dl.Tail.Prev.Next = nil
+		dl.Tail = dl.Tail.Prev
+		dl.Length -= 1
+		return true
 	}
 
-	n := sl.Head
+	n := dl.Head
 
 	for n != nil {
 		if value == n.Value {
 			n.Prev.Next, n.Next.Prev = n.Next, n.Prev
+			dl.Length -= 1
 			return true
 		}
 		n = n.Next
@@ -102,12 +109,50 @@ func (sl *DoublyLinkedList) Remove(value interface{}) bool {
 	return false
 }
 
-func (sl *DoublyLinkedList) Values() []interface{} {
+func (dl *DoublyLinkedList) RemoveAt(index int) bool {
+	if dl.Length < 1 {
+		return false
+	}
+
+	if index == 0 {
+		return dl.Remove(dl.Head.Value)
+	}
+
+	if index == dl.Length-1 {
+		return dl.Remove(dl.Tail.Value)
+	}
+
+	if index < dl.Length/2 { // Start from Head
+		node := dl.Head
+		for i := 0; i <= index; i++ {
+			if i == index {
+				// Remove
+				node.Prev.Next, node.Next.Prev = node.Next, node.Prev
+				dl.Length -= 1
+				return true
+			}
+			node = node.Next
+		}
+	} else { // Start from Tail
+		node := dl.Tail
+		for i := dl.Length - 1; i >= index; i-- {
+			if i == index {
+				node.Prev.Next, node.Next.Prev = node.Next, node.Prev
+				dl.Length -= 1
+				return true
+			}
+			node = node.Prev
+		}
+	}
+
+	return false
+}
+
+func (dl *DoublyLinkedList) Values() []interface{} {
 	values := make([]interface{}, 0)
 
-	if sl.Head != nil {
-		n := sl.Head
-		fmt.Println(sl.Tail)
+	if dl.Head != nil {
+		n := dl.Head
 		for n != nil {
 			values = append(values, n.Value)
 			n = n.Next
