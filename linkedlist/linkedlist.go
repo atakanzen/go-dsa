@@ -1,5 +1,7 @@
 package linkedlist
 
+import "fmt"
+
 type DoublyLinkedList struct {
 	Head *Node
 	Tail *Node
@@ -48,9 +50,21 @@ func (sl *DoublyLinkedList) Prepend(value interface{}) {
 }
 
 func (sl *DoublyLinkedList) Get(value interface{}) *Node {
+	if sl.Head == nil {
+		return nil
+	}
+
+	if sl.Head.Value == value {
+		return sl.Head
+	}
+
+	if sl.Tail != nil && sl.Tail.Value == value {
+		return sl.Tail
+	}
+
 	n := sl.Head
 
-	for n.Next != nil {
+	for n != nil {
 		if value == n.Value {
 			return n
 		}
@@ -58,4 +72,49 @@ func (sl *DoublyLinkedList) Get(value interface{}) *Node {
 	}
 
 	return nil
+}
+
+func (sl *DoublyLinkedList) Remove(value interface{}) bool {
+	if sl.Head == nil {
+		return false
+	}
+
+	if value == sl.Head.Value {
+		sl.Head.Next.Prev = nil
+		sl.Head = sl.Head.Next
+	}
+
+	if value == sl.Tail.Value {
+		sl.Tail.Prev.Next = nil
+		sl.Tail = sl.Tail.Prev
+	}
+
+	n := sl.Head
+
+	for n != nil {
+		if value == n.Value {
+			n.Prev.Next, n.Next.Prev = n.Next, n.Prev
+			return true
+		}
+		n = n.Next
+	}
+
+	return false
+}
+
+func (sl *DoublyLinkedList) Values() []interface{} {
+	values := make([]interface{}, 0)
+
+	if sl.Head != nil {
+		n := sl.Head
+		fmt.Println(sl.Tail)
+		for n != nil {
+			values = append(values, n.Value)
+			n = n.Next
+		}
+	} else {
+		return nil
+	}
+
+	return values
 }

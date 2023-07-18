@@ -20,10 +20,10 @@ func TestDoublyLinkedListCreation(t *testing.T) {
 func TestDoublyLinkedListGet(t *testing.T) {
 	newDoublyLinkedList := linkedlist.NewDoublyLinkedList(45, 15, 26, 12, 56, 34, 11, 65)
 
-	actual := newDoublyLinkedList.Get(56)
-	wantValue := 56
-	wantPrevValue := 12
-	wantNextValue := 34
+	actual := newDoublyLinkedList.Get(11)
+	wantValue := 11
+	wantPrevValue := 34
+	wantNextValue := 65
 
 	assert.Equal(t, wantValue, actual.Value)
 	assert.Equal(t, wantPrevValue, actual.Prev.Value)
@@ -55,6 +55,33 @@ func TestDoublyLinkedListPrepend(t *testing.T) {
 			}
 
 			assert.Equal(t, tC.want, newDoublyLinkedList.Head.Value)
+		})
+	}
+}
+
+func TestDoublyLinkedListRemove(t *testing.T) {
+	testCases := []struct {
+		desc                       string
+		initialValues, valuesAfter []interface{}
+		removeItem                 int
+		want                       bool
+	}{
+		{
+			desc:          "should remove 24 from 5 values",
+			initialValues: []interface{}{45, 15, 24, 14, 55},
+			removeItem:    24,
+			valuesAfter:   []interface{}{45, 15, 14, 55},
+			want:          true,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			doubleLinkedList := linkedlist.NewDoublyLinkedList(tC.initialValues...)
+
+			actual := doubleLinkedList.Remove(tC.removeItem)
+			values := doubleLinkedList.Values()
+			assert.Equal(t, tC.want, actual)
+			assert.Equal(t, tC.valuesAfter, values)
 		})
 	}
 }
